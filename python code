@@ -1,0 +1,29 @@
+import requests
+import os
+from pprint import pprint
+cwd=os.getcwd()
+
+#สร้างไฟล์ txt api key แล้วอ่านค่า
+file = open(cwd+'\API','r')
+key = file.read()
+
+#โดเมน Api จาก https://coinmarketcap.com/api/documentation/v1/#
+API_domain='https://pro-api.coinmarketcap.com/'
+
+#end point มีหลายๆข้อมูล ตาม packages 
+Latest = 'v1/cryptocurrency/listings/latest'
+
+#headers จาก Api document
+headers = {
+  'Accepts': 'application/json',
+  'X-CMC_PRO_API_KEY':key,
+}
+
+#เชื่อมต่อ 
+r = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest',headers=headers)
+
+#เช็คสถานะ สายฟรีมีน้อยใช้สอยประหยัด
+r.status_code
+
+#ดูข้อมูล 
+pprint(r.json())
